@@ -1,0 +1,78 @@
+{
+  "name": "lsvibes-api",
+  "version": "1.0.0",
+  "description": "API LSVibes",
+  "author": "Feliiks",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/lsvibes/web.git"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@prisma/client": "^3.6.0",
+    "@reduxjs/toolkit": "^1.7.1",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^11.2.7",
+    "@testing-library/user-event": "^12.8.3",
+    "axios": "^0.24.0",
+    "bootstrap": "^5.1.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "node-sass": "^6.0.1",
+    "nodemailer": "^6.7.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.2.0",
+    "react-redux": "^7.2.6",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.3.0",
+    "react-scripts": "4.0.3",
+    "redux": "^4.1.2",
+    "redux-persist": "^6.0.0",
+    "uuid": "^8.3.2",
+    "validator": "^13.7.0",
+    "web-vitals": "^1.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.14",
+    "prisma": "^3.6.0"
+  },
+  "scripts": {
+    "api-start": "cd api && node server.js",
+    "api-watch": "cd api && nodemon server.js",
+    "client-start": "npm start",
+    "client-watch": "npm run watch",
+    "client-build": "npm run build",
+    "start": "set PORT=3000 && react-scripts start",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "build": "react-scripts build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "prisma": {
+    "schema": "./database/schema.prisma"
+  }
+}

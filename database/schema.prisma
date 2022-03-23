@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DB_URL")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model bans {
+  id     Int     @id
+  author Int?
+  perm   Int?
+  time   Int?
+  reason String? @db.VarChar(50)
+  ip     String? @db.VarChar(20)
+
+  @@ignore
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model characters {
+  id         Int       @id
+  charid     Int?
+  name       String?   @db.VarChar(50)
+  firstname  String?   @db.VarChar(50)
+  birthdate  DateTime? @db.Date
+  money      Int?
+  blackmoney Int?
+  bank       Int?
+  coords     String?   @db.VarChar(100)
+  model      String?   @db.VarChar(150)
+
+  @@ignore
+}
+
+model death_requests {
+  id             Int    @id @default(autoincrement())
+  request_number Int    @unique(map: "request_number")
+  user_id        Int
+  status         String @db.VarChar(50)
+  users          users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "death_requests_users__fk")
+
+  @@index([user_id], map: "death_requests_users__fk")
+}
+
+model orders {
+  id           Int    @id
+  order_number Int    @unique(map: "order_number")
+  product_id   Int
+  quantity     Int
+  user_id      Int
+  status       String @db.VarChar(50)
+  users        users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "orders_users__fk")
+
+  @@index([user_id], map: "orders_users__fk")
+}
+
+model project_requests {
+  id             Int    @id @default(autoincrement())
+  request_number Int    @unique(map: "request_number")
+  user_id        Int
+  status         String @db.VarChar(50)
+  users          users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "project_requests_users__fk")
+
+  @@index([user_id], map: "death_requests_users__fk")
+}
+
+model users {
+  id               Int                @id @default(autoincrement())
+  uid              String?            @db.VarChar(255)
+  email            String?            @db.VarChar(100)
+  pwd              String?            @db.Text
+  lastip           String?            @db.VarChar(20)
+  lastco           BigInt?
+  adminLvl         Int?               @default(0)
+  whitelistStatus  Boolean?           @default(false)
+  emailToken       String?            @db.VarChar(255)
+  passwordToken    String?            @db.VarChar(255)
+  isEmailVerified  Boolean?           @default(false)
+  newsletter       Boolean?           @default(false)
+  fivem            String?            @db.VarChar(10)
+  discord          String?            @db.VarChar(20)
+  registryDate     DateTime?          @db.DateTime(0)
+  license          String?            @db.VarChar(10)
+  first            Boolean?           @default(true)
+  steam            String?            @db.VarChar(20)
+  live             String?            @db.VarChar(20)
+  xbl              String?            @db.VarChar(20)
+  username         String?            @db.VarChar(50)
+  death_requests   death_requests[]
+  orders           orders[]
+  project_requests project_requests[]
+  wl_requests      wl_requests[]
+}
+
+model wl_requests {
+  id             Int    @id @default(autoincrement())
+  request_number Int    @unique(map: "request_number")
+  user_id        Int
+  status         String @db.VarChar(50)
+  users          users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wl_requests_users__fk")
+
+  @@index([user_id], map: "death_requests_users__fk")
+}
