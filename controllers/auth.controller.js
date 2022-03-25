@@ -20,6 +20,7 @@ authController.register = async (req, res) => {
       let emailToken = getNewToken(username, email, '1h')
       let uid = getNewUID()
       let convertedPass = await passConverter(username, password, uid)
+      let currentDate = new Date(Date.now())
 
       await prisma.users.create({
         data: {
@@ -29,7 +30,8 @@ authController.register = async (req, res) => {
           pwd: convertedPass,
           newsletter: newsletter,
           emailToken: emailToken,
-          isEmailVerified: true
+          isEmailVerified: true,
+          registryDate: currentDate
         },
       })
 
