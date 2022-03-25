@@ -69,26 +69,26 @@ model project_requests {
 
 model users {
   id               Int                @id @default(autoincrement())
-  uid              String?            @db.VarChar(255)
-  email            String?            @db.VarChar(100)
-  pwd              String?            @db.Text
+  username         String             @db.VarChar(50)
+  uid              String             @db.VarChar(255)
+  email            String             @db.VarChar(100)
+  pwd              String             @db.Text
   lastip           String?            @db.VarChar(20)
   lastco           BigInt?
-  adminLvl         Int?               @default(0)
-  whitelistStatus  Boolean?           @default(false)
+  adminLvl         Int                @default(0)
+  whitelistStatus  Boolean            @default(false)
   emailToken       String?            @db.VarChar(255)
   passwordToken    String?            @db.VarChar(255)
-  isEmailVerified  Boolean?           @default(false)
-  newsletter       Boolean?           @default(false)
-  fivem            String?            @db.VarChar(10)
+  isEmailVerified  Boolean            @default(false)
+  newsletter       Boolean            @default(false)
   discord          String?            @db.VarChar(20)
-  registryDate     DateTime?          @db.Timestamp(0)
-  license          String?            @db.VarChar(50)
+  registryDate     DateTime?          @default(now()) @db.Timestamp(0)
   first            Boolean?           @default(true)
   steam            String?            @db.VarChar(20)
+  fivem            String?            @db.VarChar(10)
   live             String?            @db.VarChar(20)
   xbl              String?            @db.VarChar(20)
-  username         String?            @db.VarChar(50)
+  license          String?            @db.VarChar(50)
   death_requests   death_requests[]
   orders           orders[]
   project_requests project_requests[]
@@ -103,4 +103,11 @@ model wl_requests {
   users          users  @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "wl_requests_users__fk")
 
   @@index([user_id], map: "death_requests_users__fk")
+}
+
+model vehicules {
+  id        Int    @id @default(autoincrement())
+  spawnName String @default("0") @db.VarChar(50)
+  plate     String @default("0") @db.VarChar(50)
+  customes  String @default("0") @db.VarChar(50)
 }
