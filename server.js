@@ -15,13 +15,9 @@ app.listen(process.env.PORT, () => {
   console.log(`Le serveur est lancé sur le port ${process.env.PORT} en ${process.env.NODE_ENV} mode.`);
 });
 
-app.get("/", (_, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
-});
-
 app.use(
     cors({
-        origin: "http://lsvibes.fr",
+        origin: "http://localhost:3000",
     })
 );
 
@@ -33,4 +29,4 @@ app.use(cookieParser());
 
 // ROUTES ___________________________________________________________
 
-app.use(process.env.APP_BASE_URL, mainRouter);
+app.use(mainRouter);
