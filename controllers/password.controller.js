@@ -126,4 +126,38 @@ passwordController.passwordRequest = async (req, res) => {
     }
 }
 
+passwordController.changePassword = async (req, res) => {
+    let { uid, currentPassword, password } = req.body;
+
+    try {
+        const user = await prisma.users.findMany({
+            where: {
+                uid: uid
+            }
+        });
+
+        if (!user[0]) throw new Error;
+
+        let hash = await passConverter(user[0].username, currentPassword);
+
+        if (hash !== user[0].pwd) throw new Error;
+
+        let convertedPassword = await passConverter(user[0].username, password, uid);
+
+        await prisma.users.update({
+            where: {
+                id: user[0].id
+            },
+            data: {
+                pwd: convertedPassword
+            }
+        });
+
+        res.sendStatus(200)
+
+    } catch (error) {
+        res.sendStatus(401);
+    }
+}
+
 module.exports = passwordController;
